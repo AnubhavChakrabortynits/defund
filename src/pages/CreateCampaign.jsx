@@ -40,7 +40,7 @@ const CreateCampaign = () => {
     }
     return(
         <div className="bg-[#1e293b] flex justify-center items-center flex-col p-3 rounded-[10px] sm:p-10">
-            {loading && <Loader />}
+            {loading && <Loader msg1 = {"Processing"} msg2 = {"Please Bare With Us"} />}
             <div className="flex justify-center items-center p-[16px] rounded-[10px] sm:min-w-[380px] bg-[#818cf8]">
                 <h1 className="font-epilogue text-[20px] text-white  font-[800]">Create A Campaign</h1>
             </div>

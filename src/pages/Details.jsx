@@ -34,7 +34,7 @@ const Details = () => {
   },[contract, address])
   return (
     <div>
-    {loading && <Loader />}
+    {loading && <Loader msg1 = {"Processing..."} msg2 = {"Please Bare With Us"} />}
     <div className='w-full md:flex-row flex flex-row-reverse flex-col gap-[30px] mt-10'>
     <div className='flex-1 flex-col'>
     <img src={state.image} alt="campaignimg" className='rounded-xl grayscale-[30%] w-full h-[450px] object-cover' />

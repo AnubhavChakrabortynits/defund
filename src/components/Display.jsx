@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import ethloader from "../assets/ethloader.gif"
 import CampaignCard from './CampaignCard';
+import Loader from './Loader';
 
 const Display = ({title, loading, campaigns}) => {
     const navigate = useNavigate()
@@ -14,7 +14,7 @@ const Display = ({title, loading, campaigns}) => {
       <h1 className='font-epilogue text-[28px] font-bold text-white text-left'>{title}- {campaigns?.length}</h1>
       <div className='flex flex-wrap mt-[20px] gap-[26px]'>
         {loading && (
-            <img src={ethloader} alt="loader" className='w-[100px] h-[100px] invert'  />
+          <Loader msg1 = {"Processing"} msg2 = {"Please Bare With Us"} />
         )}
         {!loading && campaigns?.length === 0 && (
             <p className='font-semibold text-[18px] text-white'>No Created Campaign Yet</p>
