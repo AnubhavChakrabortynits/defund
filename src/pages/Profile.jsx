@@ -4,13 +4,12 @@ import { Display } from "../components";
 const Profile = () => {
 
     const [loading, setLoading] = useState(false);
-    const [campaigns, setCampaign] = useState([]);
-    const {address, getOwnerCampaigns, contract} = useStateContext()
+    const {address, getOwnerCampaigns, contract, campaigns, setCampaigns} = useStateContext()
 
     const getAllCampaigns = async() => {
         setLoading(true)
         const data = await getOwnerCampaigns()
-        setCampaign(data)
+        setCampaigns(data)
         setLoading(false)
     }
     useEffect(() => {

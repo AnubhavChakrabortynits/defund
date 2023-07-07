@@ -1,4 +1,4 @@
-import { useContext, createContext } from "react";
+import { useContext, createContext, useState } from "react";
 import {useAddress, useContract, useMetamask, useContractWrite} from "@thirdweb-dev/react"
 import { ethers } from "ethers";
 import abi from "../../abi";
@@ -11,6 +11,8 @@ export const StateProvider = ({children}) =>  {
     const {mutateAsync: createCampaign} = useContractWrite(contract,'createCampaign');
     const {mutateAsync: getFunders} = useContractWrite(contract,'getFunders');
     const {mutateAsync: fundCampaign} = useContractWrite(contract,'fundCampaign');
+    const [value, setValue] = useState("")
+    const [campaigns, setCampaigns] = useState("")
 
     const address = useAddress();
     const connect = useMetamask();
@@ -67,6 +69,20 @@ export const StateProvider = ({children}) =>  {
         }
     }
 
+    const searchCampaignByName = async(name) => {
+        try{
+            const allCampaigns = await getCampaigns();
+            if(allCampaigns.length === 0){
+                return allCampaigns;
+            }
+            const relatedCampaigns = allCampaigns.filter((campaign) => campaign.title?.toUpperCase()?.includes(name?.toUpperCase()))
+            return relatedCampaigns
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
+
     const Fund = async(pid, amount) => {
         try{
             console.log(amount)
@@ -102,7 +118,7 @@ export const StateProvider = ({children}) =>  {
     }
 
     return (
-        <Context.Provider value = {{address, makeCampaign, contract, connect, getCampaigns, getOwnerCampaigns,getFunds, Fund}}>
+        <Context.Provider value = {{address, makeCampaign, contract, connect, getCampaigns, getOwnerCampaigns,getFunds, Fund, searchCampaignByName, value, setValue, campaigns, setCampaigns}}>
         {children}
         </Context.Provider>
     )

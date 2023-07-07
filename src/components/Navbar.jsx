@@ -7,16 +7,22 @@ import Button from './Button';
 import { navlinks } from '../constants';
 import { useStateContext } from '../context';
 const Navbar = () => {
-  const {connect, address} = useStateContext();
+  const {connect, address, value, searchCampaignByName, setValue, setCampaigns} = useStateContext();
   const [active, setActive] = useState('dashboard');
   const [toggle, setToggle] = useState(false);
 
   const navigate = useNavigate()
+  
+  const searchCampaigns = async() => {
+    const data = await searchCampaignByName(value)
+    setCampaigns(data)
+  }
+
   return (
     <div className='flex md:flex-row flex-col-reverse justify-between gap-6 mb-[35px]'>
       <div className='lg:flex-1 flex flex-row max-w-[458px] py-2 pl-4 pr-2 h-[52px] bg-[#818cf8] rounded-[70px]'>
-      <input type="text" placeholder='Search Campaigns' className='flex font-normal w-full text-[16px] placeholder:text-[#e5e7eb] text-black bg-transparent pl-4 outline-none'  />
-        <div className='w-[72px] h-full rounded-[20px] bg-[#6366f1] flex justify-center items-center cursor-pointer'>
+      <input type="text" value={value} onChange={(e) => setValue(e.target.value)} placeholder='Search Campaigns' className='flex font-normal w-full text-[16px] placeholder:text-[#e5e7eb] text-black bg-transparent pl-4 outline-none'  />
+        <div className='w-[72px] h-full rounded-[20px] bg-[#6366f1] flex justify-center items-center cursor-pointer' onClick={searchCampaigns}>
           <img className='w-[25px] h-[25px] invert' src={search} alt="searchicon" />
         </div>
       </div>
