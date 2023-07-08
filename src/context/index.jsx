@@ -77,7 +77,7 @@ export const StateProvider = ({children}) =>  {
             if(allCampaigns.length === 0){
                 return allCampaigns;
             }
-            const relatedCampaigns = allCampaigns.filter((campaign) => campaign.title?.toUpperCase()?.includes(name?.toUpperCase()))
+            const relatedCampaigns = allCampaigns.filter((campaign) => campaign.title?.toUpperCase()?.includes(name?.toUpperCase()) || campaign.tag?.toUpperCase()?.includes(name?.toUpperCase()))
             return relatedCampaigns
         }
         catch(err){

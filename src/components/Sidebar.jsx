@@ -1,11 +1,10 @@
 import React, {useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import close from "../assets/close.png";
 import hamburger from "../assets/hamburger.png";
 import { navlinks } from '../constants';
 
 const Icon = (
-    {styles, name,imgUrl, isActive, disabled, handleClick}) => {
+    {styles, name,imgUrl, isActive, disabled, handleClick}) => {;
     return (
         <div className={`w-[48px] h-[48px] rounded-[10px] ${isActive && isActive === name && 'bg-[#4f46e5] ring-2 ring-[#a5b4fc]'} flex justify-center items-center ${!disabled && 'cursor-pointer'} ${styles}`} onClick={handleClick}>
           {!isActive ? (<img src = {imgUrl} className='h-1/2 w-1/2 '/>):

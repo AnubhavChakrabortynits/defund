@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import hamburger from "../assets/hamburger.png";
 import blockchain from "../assets/blockchain.png";
 import search from "../assets/search.png";
-import ethloader from "../assets/ethloader.gif"
 import Button from './Button';
 import Loader from './Loader';
 import { navlinks } from '../constants';
@@ -59,9 +58,12 @@ const Navbar = () => {
       <div className={`absolute top-[60px] w-full right-0 left-0 z-10 shadow-secondary bg-[#171717] py-4  ${!toggle?'translate-x-[100vw]':'translate-x-0'} transition-all duration-800`}>
       <ul className='mb-4'>
         {navlinks.map((item) => (
-          <li key = {item.name} className={`flex text-black rounded-[20px] p-4 ${active === item.name && 'bg-[#6366f1]'}`} onClick={() => {setActive(item.name)
-          setToggle(false);
-          navigate(item.link)
+          <li key = {item.name} className={`flex text-black rounded-[20px] p-4 ${active === item.name && 'bg-[#6366f1]'}`} onClick={() => {
+            if(!item.disabled){
+            setActive(item.name);
+            setToggle(false)
+            navigate(item.link)
+        }
           }}>
           <img src={item.imgUrl} className={`w-[34px] invert ${active === item.name}`} alt={item.name} />
           <p className={`ml-[25px] font-bold text-white font-serif ${active === item.name}`}>{item.name}</p>
