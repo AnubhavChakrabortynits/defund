@@ -3,7 +3,7 @@ import blockchain from "../assets/blockchain.png"
 import profile from "../assets/profile.png";
 import { daysLeft } from '../utils'
 
-const CampaignCard = ({owner, title, description,currentAmount, target, deadline, image, handleClick}) => {
+const CampaignCard = ({owner, title, description,currentAmount, target,tag, deadline, image, handleClick}) => {
     const remainingDays = daysLeft(deadline)
   return (
     <div className='sm:w-[288px] w-full cursor-pointer rounded-[15px] relative bg-transparent text-white ring-[#4f46e5] ring-1 ring-offset-2  ring-offset-[#4f46e5]  shadow-[#4f46e5]' onClick={handleClick}>
@@ -11,7 +11,7 @@ const CampaignCard = ({owner, title, description,currentAmount, target, deadline
       <div className='flex flex-col p-4'>
       <div className='flex flex-row mb-[18px] items-center'>
         <img src={blockchain} alt="tag" className='w-[20px] h-[20px] invert object-contain' />
-        <div className='ml-[12px] mt-[2px] font-medium text-[12px] '>Category</div>
+        <div className='ml-[12px] mt-[2px] font-medium text-[12px] '>{tag?.toUpperCase()}</div>
       </div>
       <div className='block'>
         <h3 className='font-bold text-left text-[16px] truncate underline'>{title}</h3>

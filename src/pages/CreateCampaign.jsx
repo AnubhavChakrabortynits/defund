@@ -13,6 +13,7 @@ const CreateCampaign = () => {
     const [form, setForm] = useState({
         name: '',
         title: '',
+        tag:'',
         description: '',
         target: '',
         image: '',
@@ -51,6 +52,9 @@ const CreateCampaign = () => {
                 }}/>
                 <FormField  label = "Title" placeholder = "Web Dev Challenge" inputType = "text" value ={form.title} handleChange = {(e) => {
                     handleFieldChange('title',e)
+                }}/>   
+                <FormField  label = "Tag" placeholder = "Example: General" inputType = "text" value ={form.tag} handleChange = {(e) => {
+                    handleFieldChange('tag',e)
                 }}/>   
                 <FormField  label = "Description" placeholder = "Write Your Description" isTextArea={true} value ={form.description} handleChange = {(e) => {
                     handleFieldChange('description',e)

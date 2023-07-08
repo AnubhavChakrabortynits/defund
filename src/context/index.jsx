@@ -7,7 +7,7 @@ import abi from "../../abi";
 const Context = createContext();
 
 export const StateProvider = ({children}) =>  {
-    const {contract} = useContract("0x8D48b7720FFCC00f79931fCcA53421A831943f52",abi);
+    const {contract} = useContract("0x1083368aeA72B7f99879eF2cD86F742C5622621C",abi);
     const {mutateAsync: createCampaign} = useContractWrite(contract,'createCampaign');
     const {mutateAsync: getFunders} = useContractWrite(contract,'getFunders');
     const {mutateAsync: fundCampaign} = useContractWrite(contract,'fundCampaign');
@@ -23,6 +23,7 @@ export const StateProvider = ({children}) =>  {
         const data = await createCampaign({args:[ 
             address,
             form.title,
+            form.tag,
             form.description,
             form.target,
             new Date(form.deadline).getTime(),
@@ -43,6 +44,7 @@ export const StateProvider = ({children}) =>  {
             const parsedData = campaigns.map((campaign,i) => ({
                 owner: campaign.owner,
                 title: campaign.title,
+                tag: campaign.tag,
                 description: campaign.description,
                 target: ethers.utils.formatEther(campaign.target.toString()),
                 deadline: campaign.lastDate.toNumber(),
