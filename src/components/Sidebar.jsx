@@ -17,7 +17,7 @@ const Sidebar = () => {
     const navigate = useNavigate();
     const [isActive, setActive] = useState('dashboard')
   return (
-    <div className='flex justify-between items-center flex-col sticky top-5 h-[93vh]'>
+    <div className='flex justify-between items-center flex-col sticky top-5 h-[83vh]'>
     <Link to = "/">
     <Icon styles = "w-[52px] h-[52px] bg-dark-1 invert" imgUrl ={hamburger} isActive = {isActive}/>
     </Link>
