@@ -1,6 +1,6 @@
 import { useContext, createContext, useState } from "react";
 import {useAddress, useContract, useMetamask, useContractWrite} from "@thirdweb-dev/react"
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import abi from "../../abi";
 
 
@@ -119,8 +119,41 @@ export const StateProvider = ({children}) =>  {
         }
     }
 
+    const getUserTransactions = async() => {
+        try{
+            if(!address){
+                return {}
+            }
+            const campaigns = await getCampaigns()
+            const transactions = []
+            let funders
+            let filteredFunders
+            let fundAmount
+            let totalFund = BigInt("0")
+            for(let i = 0; i < campaigns.length; i++){
+                funders = await getFunds(campaigns[i].pid)
+                filteredFunders = funders.filter((item) => item.funder === address)
+                fundAmount =  BigInt(ethers.utils.parseEther(filteredFunders[0].fund)._hex)
+                transactions.push({campaign: campaigns[i].title, funds: filteredFunders[0].fund, owner: campaigns[i].owner})
+                for(let j = 1;j < filteredFunders.length; j++){
+                    fundAmount+=(BigInt(ethers.utils.parseEther(filteredFunders[j].fund)._hex))
+                    transactions.push({campaign: campaigns[i].title, funds: filteredFunders[j].fund, owner: campaigns[i].owner})
+                }
+                totalFund+=fundAmount
+                
+            }
+
+            totalFund = ethers.utils.formatEther(totalFund)
+
+            return {totalFund, transactions}
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
+
     return (
-        <Context.Provider value = {{address, makeCampaign, contract, connect, getCampaigns, getOwnerCampaigns,getFunds, Fund, searchCampaignByName, value, setValue, campaigns, setCampaigns}}>
+        <Context.Provider value = {{address, makeCampaign, contract, connect, getCampaigns, getOwnerCampaigns,getFunds, Fund, searchCampaignByName, value, setValue, campaigns, setCampaigns, getUserTransactions}}>
         {children}
         </Context.Provider>
     )

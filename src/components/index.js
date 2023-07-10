@@ -6,4 +6,5 @@ import Display from "./Display";
 import CampaignCard from "./CampaignCard";
 import CountBox from "./CountBox";
 import Loader from "./Loader";
-export {Navbar, Sidebar, Button, FormField, Display, CampaignCard, CountBox, Loader };
+import TableRow from "./TableRow";
+export {Navbar, Sidebar, Button, FormField, Display, CampaignCard, CountBox, Loader, TableRow };
