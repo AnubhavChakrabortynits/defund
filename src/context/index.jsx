@@ -28,7 +28,6 @@ export const StateProvider = ({children}) =>  {
             form.target,
             new Date(form.deadline).getTime(),
             form.image
-            
         ]})
 
         console.log(data);
@@ -100,6 +99,7 @@ export const StateProvider = ({children}) =>  {
 
     const getFunds = async(pid) => {
         try{
+            const ownerCampaigns = await getOwnerCampaigns()
             const funds = await getFunders({args:[pid]})
             const numOfDonations = funds[0]?.length
 
@@ -108,7 +108,8 @@ export const StateProvider = ({children}) =>  {
             for(let i = 0;i < numOfDonations;i++){
                 parsedFunds.push({
                     funder: funds[0][i],
-                    fund: ethers.utils.formatEther(funds[1][i]).toString()
+                    fund: ethers.utils.formatEther(funds[1][i]).toString(),
+                    ownerCampaigns
                 })
             }
 
@@ -134,10 +135,10 @@ export const StateProvider = ({children}) =>  {
                 funders = await getFunds(campaigns[i].pid)
                 filteredFunders = funders.filter((item) => item.funder === address)
                 fundAmount =  BigInt(ethers.utils.parseEther(filteredFunders[0].fund)._hex)
-                transactions.push({campaign: campaigns[i].title, funds: filteredFunders[0].fund, owner: campaigns[i].owner})
+                transactions.push({campaign: campaigns[i].title, funds: filteredFunders[0]?.fund, owner: campaigns[i].owner})
                 for(let j = 1;j < filteredFunders.length; j++){
-                    fundAmount+=(BigInt(ethers.utils.parseEther(filteredFunders[j].fund)._hex))
-                    transactions.push({campaign: campaigns[i].title, funds: filteredFunders[j].fund, owner: campaigns[i].owner})
+                    fundAmount+=(BigInt(ethers.utils.parseEther(filteredFunders[j]?.fund)._hex))
+                    transactions.push({campaign: campaigns[i].title, funds: filteredFunders[j]?.fund, owner: campaigns[i].owner})
                 }
                 totalFund+=fundAmount
                 

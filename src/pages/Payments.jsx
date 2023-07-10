@@ -21,25 +21,31 @@ const Payments = () => {
         }
     }
     useEffect(() => {
+      if(address!=undefined){
         getTransactions()
+      }
     },[address, contract])
   return (
     <div className='text-white font-bold font-epilogue text-[24px]'>
-    <div>Your Payments</div>
-    <div className='flex md:justify-end md:px-12 justify-between px-[0]'>
+    {address?<div>Your Payments</div>:""}
+    {address?
+    (<div className='flex md:justify-end md:px-12 justify-between px-[0]'>
     <div className='mx-[10px]'>
       <CountBox title = {"Total ETH Spent"} value = {totalFunded}/>
     </div>  
     <div className='mx-[10px]'>
       <CountBox title = {"Total Payments"} value = {transactions?.length}/>
     </div>  
-    </div>
+    </div>):
+    ""
+    }
     {loading && (
           <Loader msg1 = {"Processing"} msg2 = {"Please Bare With Us"} />
         )}
       <div className="md:px-12 py-8 w-full">
   <div className="shadow overflow-x-auto rounded">
-    <table className="min-w-full">
+  {address?
+    (<table className="min-w-full">
       <thead className="bg-[#818cf8] text-white">
         <tr>
           <th className="w-1/6 text-left py-3 px-4 uppercase font-semibold text-sm">Campaign Title</th>
@@ -51,7 +57,11 @@ const Payments = () => {
     <tbody>
       {address && transactions &&  transactions.map((item,index) => <TableRow key = {index} index = {index} transactions = {item} address = {address} />)}
     </tbody>
-    </table>
+    </table>):
+    <div> 
+    Please Connect To Your Wallet
+    </div>
+  }
   </div>
 </div>
     </div>

@@ -18,7 +18,7 @@ const Profile = () => {
         }
     },[address, contract])
     return(
-        <Display title = "All Campaigns" loading = {loading} campaigns = {campaigns} />
+        <Display title = "Your Campaigns" loading = {loading} campaigns = {campaigns} />
     )
 }
 

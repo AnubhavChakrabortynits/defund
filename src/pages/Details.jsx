@@ -59,7 +59,7 @@ const Details = () => {
           </div>
           <div>
             <h4 className='font-epilogue break-all font-bold text-white text-[14px]'>{state.owner}</h4>
-            <p className='mt-[4px] font-epilogue font-semibold text-slate-300 text-[12px]'>10 <span>Campaigns</span></p>
+            <p className='mt-[4px] font-epilogue font-semibold text-slate-300 text-[12px]'>{funders[0]?.ownerCampaigns?.length} <span>Campaigns</span></p>
           </div>
         </div>
       </div>
