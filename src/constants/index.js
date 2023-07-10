@@ -1,6 +1,5 @@
 import create from '../assets/create.png';
 import dash from "../assets/dash.png"
-import logout from "../assets/logout.png"
 import withdraw from "../assets/withdraw.png"
 import payment from "../assets/eth.png";
 import profile from '../assets/profile.png'

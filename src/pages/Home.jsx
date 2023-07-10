@@ -4,7 +4,7 @@ import { Display } from "../components";
 const Home = () => {
 
     const [loading, setLoading] = useState(false);
-    const {address, getCampaigns, contract,campaigns, setCampaigns} = useStateContext()
+    const {address, getCampaigns, contract,campaigns, setCampaigns, ownerCampaigns} = useStateContext()
 
     const getAllCampaigns = async() => {
         setLoading(true)
@@ -18,7 +18,7 @@ const Home = () => {
         }
     },[address, contract])
     return(
-        <Display title = "Total Campaigns"  loading = {loading} campaigns = {campaigns} />
+        <Display title = "Total Campaigns"  loading = {loading} campaigns = {campaigns} ownerCampaigns = {ownerCampaigns} />
     )
 }
 

@@ -1,5 +1,4 @@
-import { ConnectWallet } from "@thirdweb-dev/react";
-import { Route,Routes } from "react-router-dom";
+import { Route,Routes} from "react-router-dom";
 import { Home, CreateCampaign, Profile, Details, Payments } from "./pages";
 import { Sidebar, Navbar } from "./components";
 

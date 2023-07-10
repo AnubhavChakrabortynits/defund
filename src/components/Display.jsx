@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import CampaignCard from './CampaignCard';
 import Loader from './Loader';
 
-const Display = ({title, loading, campaigns}) => {
+const Display = ({title, loading, campaigns, ownerCampaigns}) => {
     const navigate = useNavigate()
 
     const handleNavigate = (campaign) => {
@@ -21,7 +21,7 @@ const Display = ({title, loading, campaigns}) => {
         )}
 
         {!loading && campaigns?.length > 0 && campaigns.map((campaign) => (
-            <CampaignCard key={campaign.pid} {...campaign} handleClick = {() => handleNavigate(campaign)}/>
+            <CampaignCard key={campaign.pid} ownerCampaigns = {ownerCampaigns} {...campaign} handleClick = {() => handleNavigate(campaign)}/>
         ))}
       </div>
     </div>

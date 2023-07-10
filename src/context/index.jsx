@@ -12,6 +12,7 @@ export const StateProvider = ({children}) =>  {
     const {mutateAsync: getFunders} = useContractWrite(contract,'getFunders');
     const {mutateAsync: fundCampaign} = useContractWrite(contract,'fundCampaign');
     const [value, setValue] = useState("")
+    const [ownerCampaigns, setOwnerCampaigns] = useState({})
     const [campaigns, setCampaigns] = useState("")
 
     const address = useAddress();
@@ -40,6 +41,14 @@ export const StateProvider = ({children}) =>  {
     const getCampaigns = async() => {
         try{
             const campaigns = await contract.call('getCampaigns');
+            const numCampaigns = {}
+            for(let i = 0; i < campaigns.length; i++){
+                numCampaigns[campaigns[i].owner] = 0;
+            }
+            for(let i = 0; i < campaigns.length; i++){
+                numCampaigns[campaigns[i].owner] += 1;
+            }
+            setOwnerCampaigns(numCampaigns)
             const parsedData = campaigns.map((campaign,i) => ({
                 owner: campaign.owner,
                 title: campaign.title,
@@ -99,7 +108,6 @@ export const StateProvider = ({children}) =>  {
 
     const getFunds = async(pid) => {
         try{
-            const ownerCampaigns = await getOwnerCampaigns()
             const funds = await getFunders({args:[pid]})
             const numOfDonations = funds[0]?.length
 
@@ -109,7 +117,6 @@ export const StateProvider = ({children}) =>  {
                 parsedFunds.push({
                     funder: funds[0][i],
                     fund: ethers.utils.formatEther(funds[1][i]).toString(),
-                    ownerCampaigns
                 })
             }
 
@@ -133,14 +140,16 @@ export const StateProvider = ({children}) =>  {
             let totalFund = BigInt("0")
             for(let i = 0; i < campaigns.length; i++){
                 funders = await getFunds(campaigns[i].pid)
-                filteredFunders = funders.filter((item) => item.funder === address)
-                fundAmount =  BigInt(ethers.utils.parseEther(filteredFunders[0].fund)._hex)
+                filteredFunders = funders.filter((item) => item.funder === address)   
+                if(filteredFunders.length > 0){ 
+                fundAmount =  BigInt(ethers.utils.parseEther(filteredFunders[0]?.fund)._hex)
                 transactions.push({campaign: campaigns[i].title, funds: filteredFunders[0]?.fund, owner: campaigns[i].owner})
                 for(let j = 1;j < filteredFunders.length; j++){
                     fundAmount+=(BigInt(ethers.utils.parseEther(filteredFunders[j]?.fund)._hex))
                     transactions.push({campaign: campaigns[i].title, funds: filteredFunders[j]?.fund, owner: campaigns[i].owner})
                 }
                 totalFund+=fundAmount
+            }
                 
             }
 
@@ -154,7 +163,7 @@ export const StateProvider = ({children}) =>  {
     }
 
     return (
-        <Context.Provider value = {{address, makeCampaign, contract, connect, getCampaigns, getOwnerCampaigns,getFunds, Fund, searchCampaignByName, value, setValue, campaigns, setCampaigns, getUserTransactions}}>
+        <Context.Provider value = {{address, makeCampaign, contract, connect, getCampaigns, getOwnerCampaigns,getFunds, Fund, searchCampaignByName, value, setValue, campaigns, setCampaigns, getUserTransactions,ownerCampaigns}}>
         {children}
         </Context.Provider>
     )

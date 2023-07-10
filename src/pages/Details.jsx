@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Button, CountBox, Loader } from '../components'
 import { useStateContext } from '../context'
 import { calculateBarPercentage, daysLeft } from '../utils'
@@ -7,11 +7,12 @@ import profile from "../assets/profile.png"
 
 const Details = () => {
   const {state} = useLocation();
-  const {contract, address, Fund, getFunds} = useStateContext()
+  const {contract, address, Fund, getFunds, ownerCampaigns} = useStateContext()
   const [loading, setLoading] = useState(false)
   const [amount,setAmount] = useState('')
   const [funders, setFunders] = useState([])
   const colors = ["bg-[#1e293b]","bg-[#374151]"]
+  const navigate = useNavigate()
 
   const remainingDays = daysLeft(state.deadline);
 
@@ -30,6 +31,9 @@ const Details = () => {
   useEffect(() => {
     if(contract){
       fetchFunders()
+    }
+    if(!ownerCampaigns[state.owner]){
+      navigate("/")
     }
   },[contract, address])
   return (
@@ -59,7 +63,7 @@ const Details = () => {
           </div>
           <div>
             <h4 className='font-epilogue break-all font-bold text-white text-[14px]'>{state.owner}</h4>
-            <p className='mt-[4px] font-epilogue font-semibold text-slate-300 text-[12px]'>{funders[0]?.ownerCampaigns?.length} <span>Campaigns</span></p>
+            <p className='mt-[4px] font-epilogue font-semibold text-slate-300 text-[12px]'>{ownerCampaigns[state.owner]} <span>Campaigns</span></p>
           </div>
         </div>
       </div>
